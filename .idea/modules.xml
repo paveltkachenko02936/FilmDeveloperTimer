@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Temp/gradleOut/unityLibrary/build/intermediates/aapt_friendly_merged_manifests/release/aapt/aapt.iml" filepath="$PROJECT_DIR$/Temp/gradleOut/unityLibrary/build/intermediates/aapt_friendly_merged_manifests/release/aapt/aapt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Temp/gradleOut/launcher/build/generated/source/buildConfig/buildConfig.iml" filepath="$PROJECT_DIR$/Temp/gradleOut/launcher/build/generated/source/buildConfig/buildConfig.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Temp/gradleOut/unityLibrary/build/generated/source/buildConfig/buildConfig1.iml" filepath="$PROJECT_DIR$/Temp/gradleOut/unityLibrary/build/generated/source/buildConfig/buildConfig1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Temp/gradleOut/launcher/build/intermediates/bundle_manifest/release/processReleaseManifest/bundle-manifest/bundle-manifest.iml" filepath="$PROJECT_DIR$/Temp/gradleOut/launcher/build/intermediates/bundle_manifest/release/processReleaseManifest/bundle-manifest/bundle-manifest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Temp/gradleOut/unityLibrary/src/main/main.iml" filepath="$PROJECT_DIR$/Temp/gradleOut/unityLibrary/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/release.iml" filepath="$PROJECT_DIR$/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/release.iml" />
+    </modules>
+  </component>
+</project>
