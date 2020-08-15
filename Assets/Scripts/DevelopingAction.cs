@@ -1,24 +1,34 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class DevelopingAction
 {
-    public float time;
-    public string type;
-
+    private readonly int time;
+    private readonly EType type;
     private bool active = false;
-    private DevActionListener listener;
-
     private float remainTime = 0.0f;
 
-    public DevelopingAction()
+    private DevActionEventDispatcher dispatcher;
+
+    public enum EType
     {
+        Rotate,
+        Wait,
+        Wash,
+        Fixing
     }
 
-    public void SetListener(DevActionListener _listener)
+    public DevelopingAction(EType _type, int _time )
     {
-        listener = _listener;
+        type = _type;
+        time = _time;
+
+        dispatcher = AppManager.GetInstance().EventDispatcher;
     }
+
+    public EType Type { get => type; }
+    public int Time { get => time; }
 
     public void Start()
     {
@@ -28,10 +38,8 @@ public class DevelopingAction
         remainTime = time;
         active = true;
 
-        if (listener != null)
-        {
-            listener.OnActionStarted();
-        }
+        if (dispatcher != null)
+            dispatcher.OnActionStarted();
     }
 
     public void Reset()
@@ -51,10 +59,8 @@ public class DevelopingAction
         {
             Reset();
 
-            if (listener != null)
-            {
-                listener.OnActionFinished();
-            }
+            if (dispatcher != null)
+                dispatcher.OnActionFinished();
         }
     }
 
