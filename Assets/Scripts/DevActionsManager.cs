@@ -12,8 +12,8 @@ public class DevActionsManager : DevActionListener
     private DevelopingAction currentAction;
 
     private float remainTime = 0.0f;
-    private int actionStep = 0;
     private bool started = false;
+    private bool finished = false;
 
     private int[] aggitationScheme = { 50, 10, 10, 50 };
 
@@ -68,12 +68,6 @@ public class DevActionsManager : DevActionListener
         float delta = started ? Time.deltaTime : 0.0f;
         remainTime -= delta;
 
-        if (remainTime <= 0.0f && actionStep == actions.Count - 1)
-        {
-            StopTimer();
-            return;
-        }
-
         if (currentAction != null)
         {
             currentAction.Update(delta);
@@ -92,10 +86,17 @@ public class DevActionsManager : DevActionListener
 
     public void OnActionFinished()
     {
-        actionStep++;
+        actions.RemoveAt(0);
+        currentAction = null;
 
-        if (started)
+        if (started && actions.Count > 0)
+        {
             StartNewAction();
+        }
+        else if (actions.Count == 0)
+        {
+            StopTimer();
+        }
     }
 
     public void StartTimer()
@@ -112,28 +113,27 @@ public class DevActionsManager : DevActionListener
         return started;
     }
 
+    public bool IsFinished()
+    {
+        return finished;
+    }
+
     public void StopTimer()
     {
-        started = false;
-        actionStep = 0;
+        if (!started || finished)
+            return;
 
-        foreach (DevelopingAction action in actions)
-        {
-            if (action != null)
-                action.Reset();
-        }
+        started = false;
+        if (currentAction != null)
+            currentAction.Finish();
+
+        finished = true;
     }
 
 
     private void StartNewAction()
     {
-        if (actionStep > actions.Count - 1)
-        {
-            StopTimer();
-            return;
-        }
-
-        currentAction = actions[actionStep];
+        currentAction = actions[0];
 
         if (currentAction != null)
             currentAction.Start();
@@ -142,11 +142,6 @@ public class DevActionsManager : DevActionListener
     public float GetRemainTime()
     {
         return remainTime;
-    }
-
-    public int GetActionStep()
-    {
-        return actionStep;
     }
 
     public DevelopingAction.EType GetCurrentActionType()

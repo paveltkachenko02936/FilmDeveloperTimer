@@ -42,7 +42,7 @@ public class DevelopingAction
             dispatcher.OnActionStarted();
     }
 
-    public void Reset()
+    public void Finish()
     {
         active = false;
 
@@ -61,12 +61,7 @@ public class DevelopingAction
 
         if (remainTime <= 0.0f)
         {
-            Reset();
+            Finish();
         }
-    }
-
-    public bool IsRunning()
-    {
-        return active;
     }
 }

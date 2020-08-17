@@ -67,10 +67,10 @@ namespace Assets.Scripts
                 return;
 
             if (closeBtn != null)
-                closeBtn.gameObject.SetActive(actionsManager.IsStarted());
+                closeBtn.gameObject.SetActive(actionsManager.IsStarted() || actionsManager.IsFinished());
 
             if (actionBtn != null)
-                actionBtn.gameObject.SetActive(!actionsManager.IsStarted());
+                actionBtn.gameObject.SetActive(!actionsManager.IsStarted() && !actionsManager.IsFinished());
 
             if (actionsManager.IsStarted())
             {
@@ -128,18 +128,17 @@ namespace Assets.Scripts
 
         public void OnActionStarted()
         {
-            if (audioSource != null && actionsManager.GetActionStep() == 0)
+            if (audioSource != null)
                 audioSource.Play();
         }
 
         public void OnActionFinished()
         {
-            if (audioSource != null)
-                audioSource.Play();
-
-            if (!actionsManager.IsStarted())
-                AppManager.Reset();
+            if (actionsManager != null && !actionsManager.IsStarted())
+            {
+                if (audioSource != null)
+                    audioSource.Play();
+            }
         }
-
     }
 }
