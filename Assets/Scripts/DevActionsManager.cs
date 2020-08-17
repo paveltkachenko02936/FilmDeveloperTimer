@@ -40,6 +40,9 @@ public class DevActionsManager : DevActionListener
         int indexInScheme = 0;
         while (developingTime > 0)
         {
+            if (indexInScheme == aggitationScheme.Length)
+                indexInScheme = aggitationScheme.Length - 2;
+
             DevelopingAction action = new DevelopingAction(currentType, Math.Min(developingTime, aggitationScheme[indexInScheme]));
             actions.Add(action);
 
@@ -49,9 +52,6 @@ public class DevActionsManager : DevActionListener
                 currentType = DevelopingAction.EType.Wait;
             else
                 currentType = DevelopingAction.EType.Rotate;
-
-            if (indexInScheme == aggitationScheme.Length - 1)
-                indexInScheme = aggitationScheme.Length - 2;
 
             indexInScheme++;
         }
@@ -84,7 +84,7 @@ public class DevActionsManager : DevActionListener
     {
         if (currentAction != null)
         {
-            if (currentAction.Type == DevelopingAction.EType.Wash 
+            if (currentAction.Type == DevelopingAction.EType.Wash
                 || currentAction.Type == DevelopingAction.EType.Fixing)
                 remainTime = currentAction.Time;
         }
@@ -93,7 +93,9 @@ public class DevActionsManager : DevActionListener
     public void OnActionFinished()
     {
         actionStep++;
-        StartNewAction();
+
+        if (started)
+            StartNewAction();
     }
 
     public void StartTimer()
@@ -120,8 +122,6 @@ public class DevActionsManager : DevActionListener
             if (action != null)
                 action.Reset();
         }
-
-        AppManager.Reset();
     }
 
 
@@ -152,6 +152,22 @@ public class DevActionsManager : DevActionListener
     public DevelopingAction.EType GetCurrentActionType()
     {
         return (currentAction != null) ? currentAction.Type : DevelopingAction.EType.Wait;
+    }
+
+    public String GetCurrentActionName()
+    {
+        if (currentAction != null)
+        {
+            switch (currentAction.Type)
+            {
+                case DevelopingAction.EType.Rotate: return "Rotate";
+                case DevelopingAction.EType.Wait: return "Wait...";
+                case DevelopingAction.EType.Wash: return "Washing";
+                case DevelopingAction.EType.Fixing: return "Fixing";
+            }
+        }
+
+        return "";
     }
 }
 

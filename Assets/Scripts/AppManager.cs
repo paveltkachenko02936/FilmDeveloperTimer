@@ -1,7 +1,4 @@
-﻿using Assets.Scripts;
-using UnityEditorInternal;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
 public class AppManager
 {

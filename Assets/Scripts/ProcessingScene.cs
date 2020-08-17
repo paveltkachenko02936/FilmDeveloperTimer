@@ -12,6 +12,7 @@ namespace Assets.Scripts
     public class ProcessingScene : MonoBehaviour, DevActionListener
     {
         private Text timeText;
+        private Text actionText;
         private Button actionBtn;
         private Button closeBtn;
 
@@ -34,6 +35,7 @@ namespace Assets.Scripts
         private void Init()
         {
             timeText = GameObject.Find("timeText").GetComponent<Text>();
+            actionText = GameObject.Find("actionText").GetComponent<Text>();
 
             actionBtn = GameObject.Find("actionBtn").GetComponent<Button>();
             if (actionBtn != null)
@@ -77,6 +79,7 @@ namespace Assets.Scripts
                 pauseImg.SetActive(type == DevelopingAction.EType.Wait);
                 washImg.SetActive(type == DevelopingAction.EType.Wash);
                 fixingImg.SetActive(type == DevelopingAction.EType.Fixing);
+                actionText.text = actionsManager.GetCurrentActionName();
             }
             else
             {
@@ -84,6 +87,7 @@ namespace Assets.Scripts
                 pauseImg.SetActive(false);
                 washImg.SetActive(false);
                 fixingImg.SetActive(false);
+                actionText.text = "";
             }
 
             TimeSpan timeSpan = TimeSpan.FromSeconds(actionsManager.GetRemainTime());
@@ -103,7 +107,7 @@ namespace Assets.Scripts
 
         void OnDisable()
         {
-            if(actionsManager != null)
+            if (actionsManager != null)
                 actionsManager.StopTimer();
         }
 
@@ -116,7 +120,10 @@ namespace Assets.Scripts
         private void OnStopClick()
         {
             if (actionsManager != null)
+            {
                 actionsManager.StopTimer();
+                AppManager.Reset();
+            }
         }
 
         public void OnActionStarted()
@@ -129,6 +136,9 @@ namespace Assets.Scripts
         {
             if (audioSource != null)
                 audioSource.Play();
+
+            if (!actionsManager.IsStarted())
+                AppManager.Reset();
         }
 
     }

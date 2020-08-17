@@ -19,7 +19,7 @@ public class DevelopingAction
         Fixing
     }
 
-    public DevelopingAction(EType _type, int _time )
+    public DevelopingAction(EType _type, int _time)
     {
         type = _type;
         time = _time;
@@ -45,6 +45,10 @@ public class DevelopingAction
     public void Reset()
     {
         active = false;
+
+        if (dispatcher != null)
+            dispatcher.OnActionFinished();
+
         remainTime = time;
     }
 
@@ -58,9 +62,6 @@ public class DevelopingAction
         if (remainTime <= 0.0f)
         {
             Reset();
-
-            if (dispatcher != null)
-                dispatcher.OnActionFinished();
         }
     }
 
